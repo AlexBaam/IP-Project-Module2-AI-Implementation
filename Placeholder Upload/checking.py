@@ -6,6 +6,7 @@ import pytesseract
 from pdf2image import convert_from_path
 from PIL import Image
 from docx import Document
+from ocr_db_handler import parse_transaction_data, insert_to_postgres
 import re  # for regulated expressions
 
 # DOAR PT WINDOWS!!!!! aici pui calea/path-ul catre tesseract.exe
@@ -107,6 +108,9 @@ def select_file():
     # we search for the IBAN code in text
     iban_found = find_iban(extracted_text)
 
+    transaction_data = parse_transaction_data(extracted_text)
+    insert_to_postgres(transaction_data)
+    
     message = f"Valid file!\n\nName: {name}\nExtension: {extension}\nSize: {size} bytes\n"
     if iban_found:
         message += f"'IBAN' found in document: {', '.join(iban_found)}"
