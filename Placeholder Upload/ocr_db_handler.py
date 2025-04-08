@@ -25,7 +25,7 @@ def parse_transaction_data(text):
 def insert_to_postgres(data, user_id="U1"):
     try:
         conn = psycopg2.connect(
-            dbname="ocrdb", user="postgres", password="yourpassword", host="localhost", port="5432"
+            dbname="ocrdb", user="postgres", password="postgres", host="localhost", port="5432"
         )
         cursor = conn.cursor()
 
