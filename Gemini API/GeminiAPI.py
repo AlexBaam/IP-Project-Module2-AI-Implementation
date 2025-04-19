@@ -3,8 +3,6 @@ from spire.doc import * # pip install spire-doc
 import pymupdf # pip install pymupdf
 import re
 
-API_KEY = "AIzaSyBnmOjPU5Nx0yh5A-ktmrWKdMcK2Iyuqq8"
-
 BANK_STATEMENT_PROMPT = ("buna so eu am un extras de cont, ai putea sa il analizezi si sa faci niste statistici?"
                          "vreau sa faci statisticile astea sub forma de pie charts sau alte tipuri de charts."
                          "Afiseaza astea sub forma de cod folosind html si javascript unde o sa folosesti apache echarts."
@@ -22,7 +20,7 @@ MODEL = "gemini-2.0-flash"
 
 
 class GeminiAPI:
-    def __init__(self, api_key=API_KEY, statistics=STATISTICS, gemini_prompt=BANK_STATEMENT_PROMPT, model=MODEL):
+    def __init__(self, api_key, statistics=STATISTICS, gemini_prompt=BANK_STATEMENT_PROMPT, model=MODEL):
         self.api_key = api_key
         self.statistics = statistics
         self.model = model
