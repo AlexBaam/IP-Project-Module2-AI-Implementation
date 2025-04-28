@@ -48,12 +48,8 @@ const Dashboard: React.FC = () => {
 
     console.log('Prepared for backend:', { reportType, useOCR, useAI, files });
 
-    // Example for sending to backend:
-    /*
-    await fetch('YOUR_BACKEND_ENDPOINT', {
-      method: 'POST',
-      body: formData,
-    });
+    //sending to backend:
+  
     */
   };
 
