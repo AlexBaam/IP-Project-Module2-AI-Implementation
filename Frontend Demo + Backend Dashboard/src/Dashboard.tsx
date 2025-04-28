@@ -1,6 +1,12 @@
 import React, { useState } from 'react';
 
-type ReportType = 'bar' | 'pie' | 'line' | '';
+type ReportType =
+  | 'impartire_zile'
+  | 'impartire_magazine'
+  | 'total_cheltuieli'
+  | 'total_primiti'
+  | 'impartire_categorii'
+  | '';
 
 const Dashboard: React.FC = () => {
   const [files, setFiles] = useState<File[]>([]);
@@ -13,7 +19,7 @@ const Dashboard: React.FC = () => {
     const allowedTypes = ['application/pdf', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
 
     const validFiles = selectedFiles.filter(file => allowedTypes.includes(file.type));
-    setFiles(prev => [...prev, ...validFiles]);
+    setFiles(prev => [...prev, ...validFiles]); // batch append
   };
 
   const handleRemoveFile = (index: number) => {
@@ -42,9 +48,12 @@ const Dashboard: React.FC = () => {
 
     console.log('Prepared for backend:', { reportType, useOCR, useAI, files });
 
-    //sending to backend:
+    // Example for sending to backend:
     /*
-   
+    await fetch('YOUR_BACKEND_ENDPOINT', {
+      method: 'POST',
+      body: formData,
+    });
     */
   };
 
@@ -88,9 +97,11 @@ const Dashboard: React.FC = () => {
             style={{ width: '100%', padding: '10px', borderRadius: '5px' }}
           >
             <option value="">-- Select --</option>
-            <option value="bar">Bar Chart</option>
-            <option value="pie">Pie Chart</option>
-            <option value="line">Line Chart</option>
+            <option value="impartire_zile">Împărțirea banilor pe zilele săptămânii</option>
+            <option value="impartire_magazine">Împărțirea banilor pe magazine/comercianți</option>
+            <option value="total_cheltuieli">Total bani cheltuiți</option>
+            <option value="total_primiti">Total bani primiți</option>
+            <option value="impartire_categorii">Împărțirea banilor primiți pe categorii</option>
           </select>
         </div>
 
