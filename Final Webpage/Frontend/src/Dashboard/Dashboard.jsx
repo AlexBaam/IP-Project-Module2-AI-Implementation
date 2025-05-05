@@ -5,6 +5,7 @@ import { FaHome, FaBullseye, FaChartPie, FaHistory, FaRobot, FaUpload, FaComment
 export default function Dashboard() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [selectedOption, setSelectedOption] = useState("");
+  const [htmlContent, setHtmlContent] = useState(""); // State to store the HTML content
 
   const handleFileChange = (e) => {
     setSelectedFile(e.target.files[0]);
@@ -14,8 +15,31 @@ export default function Dashboard() {
     setSelectedOption(e.target.value);
   };
 
-  const handleSubmit = () => {
-    alert("Fișierul și opțiunea au fost trimise!");
+  const handleSubmit = async () => {
+    if (!selectedFile || !selectedOption) {
+      alert("Va rugam sa incarcati un fisier si sa selectati o optiune!");
+      return;
+    }
+
+  const formData = new FormData();
+    formData.append("files", selectedFile);
+    formData.append("reportType", selectedOption);
+
+    try {
+      const response = await fetch("http://localhost:5000/generate-report", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (response.ok) {
+        const html = await response.text();
+        setHtmlContent(html); // Store the HTML content
+      } else {
+        console.error("Error generating report");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
 
   return (
@@ -56,12 +80,15 @@ export default function Dashboard() {
           <option value="line">Line chart</option>
         </select>
 
-        <button onClick={handleSubmit} className="submit-button">Send</button>
+<button onClick={handleSubmit} className="submit-button">Send</button>
 
-        {/* <div className="report-placeholder">
-          <h3>Spendings:</h3>
-          <img src="/placeholder-chart.png" alt="Placeholder report" />
-        </div> */}
+        {/* Render the generated HTML report */}
+        {htmlContent && (
+          <div className="report-section">
+            <h2>Generated Report:</h2>
+            <div dangerouslySetInnerHTML={{ __html: htmlContent }} />
+          </div>
+        )}
       </main>
     </div>
   );
