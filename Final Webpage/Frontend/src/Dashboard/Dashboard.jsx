@@ -84,11 +84,20 @@ export default function Dashboard() {
 
         {/* Render the generated HTML report */}
         {htmlContent && (
-          <div className="report-section">
-            <h2>Generated Report:</h2>
-            <div dangerouslySetInnerHTML={{ __html: htmlContent }} />
-          </div>
-        )}
+  <div className="report-section" style={{ width: "100%", height: "100%", overflow: "hidden" }}>
+    <h2>Generated Report:</h2>
+    <iframe
+      srcDoc={htmlContent}
+      title="Generated Report"
+      style={{
+        width: "100%",
+        height: "100vh", // Full viewport height
+        border: "none",
+        overflow: "hidden",
+      }}
+    />
+  </div>
+)}
       </main>
     </div>
   );
