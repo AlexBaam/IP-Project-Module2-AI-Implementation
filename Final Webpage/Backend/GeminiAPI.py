@@ -101,7 +101,7 @@ class GeminiAPI:
         for file in files:
             if file[-4:] == ".pdf" or file[-4:] == ".doc" or file[-5:] == ".docx":
                 print(f"Processing Document: {file}")
-                for image in self.convert_pdf_to_images(file):
+                for image in self._convert_pdf_to_images(file):
                     new_files.append(image)
             elif file[-4:] in [".jpg", ".png"] or file[-5:] == ".jpeg":
                 new_files.append(file)
